@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- minify -->
+    <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet" />
+    <!-- latest -->
+    <link href="https://unpkg.com/nes.css@latest/css/nes.min.css" rel="stylesheet" />
+    <!-- core style only -->
+    <!--font-->
+    <link href="https://unpkg.com/nes.css/css/nes-core.min.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<style>
+ body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+    height: 120vh;
+ }
+ html, body, pre, code, kbd, samp {
+    font-family: "Press Start 2P", system-ui;
+    background-color:rgb(33, 37, 41);
+    ;
+    color: wheat;
+}
+.contener{
+    padding: 10px;
+    border: 5px  solid black;
+    background-color: white;
+}
+.screen{
+    width: 100;
+    height: 40px;
+    background-color: green;
+    margin-bottom: 20px;
+    line-height: 2.5;
+    padding-left: 10px;
+    color: white;
+}
+.button{
+    display: flex;
+    flex-flow: row-reverse;
+}
+.button .btn1{
+    display: flex;
+    flex-flow: column;
+}
+.button .btn2{
+    display: grid;
+    grid-template-columns: repeat(3,180px);
+    gap: 30px;
+    margin-right: 10px;
+}
+.t2{
+    background-color: black !important;
+    color: white;
+}
+.icon-list{
+    margin-top: 10px;
+}
+.con{
+    margin-bottom: 50px !important;
+}
+
+</style>
+
+<body>
+    <div class="nes-container is-dark with-title con ">
+        <p class="title">About</p>
+        <p>This is a simple calculator using </p>
+        <a href="https://nostalgic-css.github.io/NES.css/" class="nes-badge"><span class="is-primary">NES.css</span></a>
+        <a href="#" class="nes-badge"><span class="is-success">html</span></a>
+        <a href="#" class="nes-badge"><span class="is-warning">javaScript</span></a>
+      </div>
+    <div class="contener nes-container with-title t1 ">
+        <p class="title t2">calculator</p>
+        <div class="screen">
+            <span id="txt"></span>
+        </div>
+        <div class="button">
+             <div class="btn1">
+                <button type="button" class="nes-btn is-success" value="C" id="clear" onclick="clear()">C</button>
+                <button type="button" class="nes-btn is-warning btn" value="+">+</button>
+                <button type="button" class="nes-btn is-warning btn" value="-">-</button>
+                <button type="button" class="nes-btn is-warning btn" value="/">/</button>
+                <button type="button" class="nes-btn is-warning btn" value="*">*</button>
+                <button type="button" class="nes-btn is-primary " value="=" id="res">=</button>
+             </div>
+             <div class="btn2">
+                <button type="button" class="nes-btn btn" value="1">1</button>
+                <button type="button" class="nes-btn btn" value="2">2</button>
+                <button type="button" class="nes-btn btn" value="3">3</button>
+                <button type="button" class="nes-btn btn" value="4">4</button>
+                <button type="button" class="nes-btn btn" value="5">5</button>
+                <button type="button" class="nes-btn btn" value="6">6</button>
+                <button type="button" class="nes-btn btn" value="7">7</button>
+                <button type="button" class="nes-btn btn" value="8">8</button>
+                <button type="button" class="nes-btn btn" value="9">9</button>
+             </div>
+        </div>
+    </div>
+    <section class="icon-list"> 
+        <!-- instagram -->
+        <a class="nes-icon instagram is-large" href="https://www.instagram.com/ishded_7/"></a>
+        <!-- github -->
+        <a class="nes-icon github is-large" href="https://github.com/zoneCode87/"></a>
+      
+        <!-- linkedin -->
+        <a class="nes-icon linkedin is-large"href="https://www.linkedin.com/in/ibrahim-shded-939405309/?locale=en_US"></a>
+    
+    </section>
+
+      <script>   
+        let displayElement = document.querySelector("#txt");
+        let operatorPressedRecently = false;
+        let showingResult = false;
+    
+
+        let numberButtons = document.querySelectorAll(".btn2 .btn");
+        numberButtons.forEach((button) => {
+            button.addEventListener("click", () => {
+                if (showingResult) {
+                    displayElement.textContent = "";
+                    showingResult = false;
+                }
+                displayElement.textContent += button.value;
+                operatorPressedRecently = true;
+            });
+        });
+    
+        let operatorButtons = document.querySelectorAll(".btn1 .btn");
+        operatorButtons.forEach((button) => {
+            button.addEventListener("click", () => {
+                if (operatorPressedRecently) {
+                    displayElement.textContent += button.value;
+                    operatorPressedRecently = false;
+                }
+            });
+        });
+    
+        document.getElementById("clear").addEventListener("click", () => {
+            operatorPressedRecently = false;
+            displayElement.textContent = "";
+        });
+    
+        document.getElementById("res").addEventListener("click", () => {
+            try {
+                displayElement.textContent = eval(displayElement.textContent);
+                showingResult = true;
+            } catch {
+                displayElement.textContent = "Error";
+            }
+        });
+    </script>
+    
+</body>
+</html>

@@ -9,7 +9,7 @@ A simple and clean calculator, built with HTML and JavaScript, styled using the 
 
 ## Preview
 
-<img src="/webimg.PNG" alt="Calculator Preview" />
+<img src="/imgclc.PNG" alt="Calculator Preview" />
 
 ## How to Use
 1. Clone this repository.

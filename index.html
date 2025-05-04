@@ -117,46 +117,56 @@
     </section>
 
       <script>   
-        let displayElement = document.querySelector("#txt");
-        let operatorPressedRecently = false;
-        let showingResult = false;
-    
+let displayElement = document.querySelector("#txt");
+let operatorPressedRecently = false;
+let showingResult = false;
 
-        let numberButtons = document.querySelectorAll(".btn2 .btn");
-        numberButtons.forEach((button) => {
-            button.addEventListener("click", () => {
-                if (showingResult) {
-                    displayElement.textContent = "";
-                    showingResult = false;
-                }
-                displayElement.textContent += button.value;
-                operatorPressedRecently = true;
-            });
-        });
-    
-        let operatorButtons = document.querySelectorAll(".btn1 .btn");
-        operatorButtons.forEach((button) => {
-            button.addEventListener("click", () => {
-                if (operatorPressedRecently) {
-                    displayElement.textContent += button.value;
-                    operatorPressedRecently = false;
-                }
-            });
-        });
-    
-        document.getElementById("clear").addEventListener("click", () => {
+function isOperator(char) {
+    return ['+', '-', '*', '/'].includes(char);
+}
+
+let numberButtons = document.querySelectorAll(".btn2 .btn");
+numberButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        if (showingResult) {
+            displayElement.textContent = button.value;
+        } else {
+            displayElement.textContent += button.value;
+        }
+        showingResult = false;
+        operatorPressedRecently = true;
+    });
+});
+
+let operatorButtons = document.querySelectorAll(".btn1 .btn");
+operatorButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        let currentText = displayElement.textContent;
+        let lastChar = currentText.slice(-1);
+
+        if (currentText !== "" && !isOperator(lastChar)) {
+            displayElement.textContent += button.value;
             operatorPressedRecently = false;
-            displayElement.textContent = "";
-        });
-    
-        document.getElementById("res").addEventListener("click", () => {
-            try {
-                displayElement.textContent = eval(displayElement.textContent);
-                showingResult = true;
-            } catch {
-                displayElement.textContent = "Error";
-            }
-        });
+            showingResult = false;
+        }
+    });
+});
+
+document.getElementById("clear").addEventListener("click", () => {
+    operatorPressedRecently = false;
+    showingResult = false;
+    displayElement.textContent = "";
+});
+
+document.getElementById("res").addEventListener("click", () => {
+    try {
+        displayElement.textContent = eval(displayElement.textContent);
+        showingResult = true;
+    } catch {
+        displayElement.textContent = "Error";
+        showingResult = true;
+    }
+});
     </script>
     
 </body>
